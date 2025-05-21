@@ -1,0 +1,61 @@
+import { useState } from "react";
+
+export default function EntryForm({ addEntry }) {
+  const [formData, setFormData] = useState({
+    location: "",
+    country: "",
+    thoughts: "",
+    images: []
+  });
+
+  const handleChange = (e) => {
+    const { name, value, files } = e.target;
+    if (name === "images") {
+      const fileArray = Array.from(files).map(file => URL.createObjectURL(file));
+      setFormData(prev => ({ ...prev, images: fileArray }));
+    } else {
+      setFormData(prev => ({ ...prev, [name]: value }));
+    }
+  };
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    if (formData.location && formData.country) {
+      addEntry(formData);
+      setFormData({ location: "", country: "", thoughts: "", images: [] });
+    }
+  };
+
+  return (
+    <form className="entry-form" onSubmit={handleSubmit}>
+      <input
+        name="location"
+        value={formData.location}
+        onChange={handleChange}
+        placeholder="Location"
+        required
+      />
+      <input
+        name="country"
+        value={formData.country}
+        onChange={handleChange}
+        placeholder="Country"
+        required
+      />
+      <textarea
+        name="thoughts"
+        value={formData.thoughts}
+        onChange={handleChange}
+        placeholder="Your thoughts"
+      />
+      <input
+        type="file"
+        name="images"
+        accept="image/*"
+        multiple
+        onChange={handleChange}
+      />
+      <button type="submit">Add Entry</button>
+    </form>
+  );
+}
