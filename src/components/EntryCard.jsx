@@ -1,4 +1,4 @@
-export default function EntryCard({ entry, onDelete }) {
+export default function EntryCard({ entry, onDelete, onEdit }) {
   return (
     <div className="entry-card">
       <h2>{entry.location}, {entry.country}</h2>
@@ -8,6 +8,7 @@ export default function EntryCard({ entry, onDelete }) {
           <img key={idx} src={src} alt={entry.location} />
         ))}
       </div>
+      <button onClick={onEdit}>Edit</button>
       <button onClick={onDelete}>Delete</button>
     </div>
   );

@@ -28,29 +28,46 @@ const initialEntries = [
 
 export default function App() {
   const [entries, setEntries] = useState(initialEntries);
+  const [editingEntry, setEditingEntry] = useState(null);
 
-  const addEntry = (entry) => {
-    setEntries([...entries, { ...entry, id: Date.now() }]);
+  const addOrUpdateEntry = (entry) => {
+    if (entry.id) {
+      // Update
+      setEntries(entries.map(e => e.id === entry.id ? entry : e));
+    } else {
+      // Add
+      setEntries([...entries, { ...entry, id: Date.now() }]);
+    }
+    setEditingEntry(null);
   };
 
   const deleteEntry = (id) => {
     setEntries(entries.filter(entry => entry.id !== id));
   };
 
+  const editEntry = (entry) => {
+    setEditingEntry(entry);
+    window.scrollTo({ top: 0, behavior: "smooth" }); // Scroll to form
+  };
+
   return (
     <div className="app-container">
       <h1>My Travel Journal</h1>
-      <EntryForm addEntry={addEntry} />
+      <EntryForm
+        key={editingEntry?.id || "new"}
+        onSubmit={addOrUpdateEntry}
+        initialData={editingEntry}
+      />
       <div className="entry-list">
         {entries.map(entry => (
           <EntryCard
             key={entry.id}
             entry={entry}
             onDelete={() => deleteEntry(entry.id)}
+            onEdit={() => editEntry(entry)}
           />
         ))}
       </div>
     </div>
   );
 }
-

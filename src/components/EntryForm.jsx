@@ -1,12 +1,19 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 
-export default function EntryForm({ addEntry }) {
+export default function EntryForm({ onSubmit, initialData }) {
   const [formData, setFormData] = useState({
+    id: null,
     location: "",
     country: "",
     thoughts: "",
     images: []
   });
+
+  useEffect(() => {
+    if (initialData) {
+      setFormData(initialData);
+    }
+  }, [initialData]);
 
   const handleChange = (e) => {
     const { name, value, files } = e.target;
@@ -21,8 +28,8 @@ export default function EntryForm({ addEntry }) {
   const handleSubmit = (e) => {
     e.preventDefault();
     if (formData.location && formData.country) {
-      addEntry(formData);
-      setFormData({ location: "", country: "", thoughts: "", images: [] });
+      onSubmit(formData);
+      setFormData({ id: null, location: "", country: "", thoughts: "", images: [] });
     }
   };
 
@@ -55,7 +62,9 @@ export default function EntryForm({ addEntry }) {
         multiple
         onChange={handleChange}
       />
-      <button type="submit">Add Entry</button>
+      <button type="submit">
+        {formData.id ? "Update Entry" : "Add Entry"}
+      </button>
     </form>
   );
 }
