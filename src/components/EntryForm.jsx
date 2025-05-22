@@ -5,6 +5,8 @@ export default function EntryForm({ onSubmit, initialData }) {
     id: null,
     location: "",
     country: "",
+    arrivalDate: "",
+    departureDate: "",
     thoughts: "",
     images: []
   });
@@ -49,6 +51,24 @@ export default function EntryForm({ onSubmit, initialData }) {
         placeholder="Country"
         required
       />
+      <label>
+        Arrival Date:
+        <input
+          type="date"
+          name="arrivalDate"
+          value={formData.arrivalDate || ""}
+          onChange={handleChange}
+        />
+      </label>
+      <label>
+        Departure Date:
+        <input
+          type="date"
+          name="departureDate"
+          value={formData.departureDate || ""}
+          onChange={handleChange}
+        />
+      </label>
       <textarea
         name="thoughts"
         value={formData.thoughts}

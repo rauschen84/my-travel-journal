@@ -1,12 +1,14 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import EntryForm from "./components/EntryForm";
 import EntryCard from "./components/EntryCard";
 
-const initialEntries = [
+const defaultEntries = [
   {
     id: 1,
     location: "Kyoto",
     country: "Japan",
+    arrivalDate: "2022-05-12",
+    departureDate: "2022-05-20",
     thoughts: "Kyoto was beautiful in spring!",
     images: ["/images/kyoto1.jpg"]
   },
@@ -14,6 +16,8 @@ const initialEntries = [
     id: 2,
     location: "Barcelona",
     country: "Spain",
+    arrivalDate: "2022-09-02",
+    departureDate: "2022-09-10",
     thoughts: "Loved the Gaudí architecture!",
     images: ["/images/barcelona1.jpg"]
   },
@@ -21,21 +25,30 @@ const initialEntries = [
     id: 3,
     location: "Paris",
     country: "France",
+    arrivalDate: "2023-06-05",
+    departureDate: "2023-06-18",
     thoughts: "Eiffel Tower at night is magical.",
     images: ["/images/paris1.jpg"]
   }
 ];
 
 export default function App() {
-  const [entries, setEntries] = useState(initialEntries);
-  const [editingEntry, setEditingEntry] = useState(null);
+  // Load from localStorage or default entries on first render
+  const [entries, setEntries] = useState(() => {
+    const saved = localStorage.getItem("travelEntries");
+    return saved ? JSON.parse(saved) : defaultEntries;
+  });
+  const [editingEntry, setEditingEntry] = useState(null);  
+
+  // Save to localStorage whenever entries change
+  useEffect(() => {
+    localStorage.setItem("travelEntries", JSON.stringify(entries));
+  }, [entries]);
 
   const addOrUpdateEntry = (entry) => {
     if (entry.id) {
-      // Update
       setEntries(entries.map(e => e.id === entry.id ? entry : e));
     } else {
-      // Add
       setEntries([...entries, { ...entry, id: Date.now() }]);
     }
     setEditingEntry(null);
@@ -47,7 +60,7 @@ export default function App() {
 
   const editEntry = (entry) => {
     setEditingEntry(entry);
-    window.scrollTo({ top: 0, behavior: "smooth" }); // Scroll to form
+    window.scrollTo({ top: 0, behavior: "smooth" });
   };
 
   return (
