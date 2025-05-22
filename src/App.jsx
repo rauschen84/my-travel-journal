@@ -10,7 +10,7 @@ const defaultEntries = [
     arrivalDate: "2022-05-12",
     departureDate: "2022-05-20",
     thoughts: "Kyoto was beautiful in spring!",
-    images: ["/images/kyoto1.jpg"]
+    images: ["/images/kyoto1.jpg", "/images/kyoto2.jpg", "images/kyoto3.jpg"]
   },
   {
     id: 2,
@@ -19,7 +19,7 @@ const defaultEntries = [
     arrivalDate: "2022-09-02",
     departureDate: "2022-09-10",
     thoughts: "Loved the Gaudí architecture!",
-    images: ["/images/barcelona1.jpg"]
+    images: ["/images/barcelona1.jpg", "/images/barcelona2.jpg", "/images/barcelona3.jpg"]
   },
   {
     id: 3,
@@ -27,8 +27,8 @@ const defaultEntries = [
     country: "France",
     arrivalDate: "2023-06-05",
     departureDate: "2023-06-18",
-    thoughts: "Eiffel Tower at night is magical.",
-    images: ["/images/paris1.jpg"]
+    thoughts: "Eiffel Tower at night is magical!",
+    images: ["/images/paris1.jpg", "/images/paris2.jpg", "/images/paris3.jpg"]
   }
 ];
 

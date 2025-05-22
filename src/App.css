@@ -33,10 +33,21 @@ h1 {
   border-radius: 8px;
   padding: 1rem;
   background: #f9f9f9;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
 }
 
 .entry-card img {
-  max-width: 100px;
+  max-width: 200px;
   margin-right: 0.5rem;
   border-radius: 4px;
+}
+
+.images {
+  margin-left: 2vw;
+}
+
+.description {
+  margin-right: 2vw;
 }
