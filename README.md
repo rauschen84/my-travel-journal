@@ -1,13 +1,96 @@
-# React + Vite
+# 🌍 My Travel Journal
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+A simple, elegant React app to document and relive your travels. Create, view, update, and delete journal entries for locations you've visited — including dates, descriptions, and an image carousel to showcase your best moments.
 
-Currently, two official plugins are available:
+Deployed with Vercel — no setup needed!
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+## 🔗 Live Demo
 
-## Expanding the ESLint configuration
+👉 [Try the app here](https://my-travel-journal-chi.vercel.app/)
 
-If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
-# my-travel-journal
+---
+
+## ✨ Features
+
+- ✅ Add new travel entries with location, country, dates, and thoughts
+- 🖼️ Upload **multiple images** per entry with a built-in carousel
+- ✏️ Edit existing entries
+- 🗑️ Delete entries
+- 💾 Persistent storage using `localStorage`
+- 📅 Arrival and departure date tracking
+- 🧼 Clean UI with custom CSS (no frameworks)
+
+---
+
+## 📁 Folder Structure
+
+my-travel-journal/
+├── public/
+│ └── images/ # sample images
+├── src/
+│ ├── components/
+│ │ ├── Carousel.css
+│ │ ├── Carousel.jsx
+│ │ ├── EntryCard.jsx
+│ │ └── EntryForm.jsx
+│ ├── App.css
+│ ├── App.jsx
+│ └── main.jsx
+├── .gitignore
+├── README.md
+├── eslint.config.js
+├── index.html
+├── package-lock.json
+├── package.json
+└── vite.config.js
+
+---
+
+## 🚀 Getting Started Locally
+
+Clone the repo and run it locally:
+
+```bash
+
+git clone https://github.com/rauschen84/my-travel-journal.git
+cd my-travel-journal
+npm install
+npm run dev
+```
+
+Then open http://localhost:5173 in your browser.
+
+---
+
+## 🛠️ Built With
+
+- React
+
+- Vite
+
+- Vercel for deployment
+
+- Vanilla CSS (no Tailwind, Bootstrap, or UI libraries)
+
+---
+
+## 💡 Future Enhancements
+
+- Weather API integration (fetch real-time weather for each location)
+
+- Dark mode toggle
+
+- Google Maps integration
+
+---
+
+## 👤 Author
+
+Alexander Schultheiss / rauschen84
+GitHub: @rauschen84
+
+---
+
+## 📄 License
+
+This project is open source and free to use for educational and personal portfolio purposes.
