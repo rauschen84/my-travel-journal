@@ -5,7 +5,9 @@ export default function EntryCard({ entry, onDelete, onEdit }) {
     <div className="entry-card">
       <div className="images">
         {entry.images && entry.images.length > 0 && (
-          <Carousel images={entry.images} />
+          <>            
+            <Carousel images={entry.images} />
+          </>
         )}
       </div>
       <div className="description"> 
@@ -14,7 +16,7 @@ export default function EntryCard({ entry, onDelete, onEdit }) {
           <strong>Dates:</strong>{" "}
           {entry.arrivalDate} – {entry.departureDate}
         </p>
-        <p>{entry.thoughts}</p>      
+        <p>{entry.description}</p>      
         <button onClick={onEdit}>Edit</button>
         <button onClick={onDelete}>Delete</button>
       </div>

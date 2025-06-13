@@ -12,7 +12,7 @@ Deployed with Vercel — no setup needed!
 
 ## ✨ Features
 
-- ✅ Add new travel entries with location, country, dates, and thoughts
+- ✅ Add new travel entries with location, country, dates, and description
 - 🖼️ Upload **multiple images** per entry with a built-in carousel
 - ✏️ Edit existing entries
 - 🗑️ Delete entries

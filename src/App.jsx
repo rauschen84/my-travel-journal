@@ -2,60 +2,76 @@ import { useState, useEffect } from "react";
 import EntryForm from "./components/EntryForm";
 import EntryCard from "./components/EntryCard";
 
-const defaultEntries = [
-  {
-    id: 1,
-    location: "Kyoto",
-    country: "Japan",
-    arrivalDate: "2022-05-12",
-    departureDate: "2022-05-20",
-    thoughts: "Kyoto was beautiful in spring!",
-    images: ["/images/kyoto1.jpg", "/images/kyoto2.jpg", "images/kyoto3.jpg"]
-  },
-  {
-    id: 2,
-    location: "Barcelona",
-    country: "Spain",
-    arrivalDate: "2022-09-02",
-    departureDate: "2022-09-10",
-    thoughts: "Loved the Gaudí architecture!",
-    images: ["/images/barcelona1.jpg", "/images/barcelona2.jpg", "/images/barcelona3.jpg"]
-  },
-  {
-    id: 3,
-    location: "Paris",
-    country: "France",
-    arrivalDate: "2023-06-05",
-    departureDate: "2023-06-18",
-    thoughts: "Eiffel Tower at night is magical!",
-    images: ["/images/paris1.jpg", "/images/paris2.jpg", "/images/paris3.jpg"]
-  }
-];
-
 export default function App() {
-  // Load from localStorage or default entries on first render
-  const [entries, setEntries] = useState(() => {
-    const saved = localStorage.getItem("travelEntries");
-    return saved ? JSON.parse(saved) : defaultEntries;
-  });
-  const [editingEntry, setEditingEntry] = useState(null);  
+  const [entries, setEntries] = useState([]); // start empty
+  const [editingEntry, setEditingEntry] = useState(null);
 
-  // Save to localStorage whenever entries change
   useEffect(() => {
-    localStorage.setItem("travelEntries", JSON.stringify(entries));
-  }, [entries]);
+    fetch("http://localhost:8080/api/entries")
+      .then(response => {
+        if (!response.ok) {
+          throw new Error("Network response was not ok");
+        }
+        return response.json();
+      })
+      .then(data => {
+        const transformed = data.map((entry) => ({
+          ...entry,
+          images: [entry.imageUrl1, entry.imageUrl2, entry.imageUrl3].filter(Boolean),
+        }));        
+        setEntries(transformed);
+      })
+      .catch(error => {
+        console.error("Fetch error:", error);
+        // optionally set some error state here
+      });
+  }, []);
 
   const addOrUpdateEntry = (entry) => {
-    if (entry.id) {
-      setEntries(entries.map(e => e.id === entry.id ? entry : e));
-    } else {
-      setEntries([...entries, { ...entry, id: Date.now() }]);
-    }
-    setEditingEntry(null);
-  };
+  const isEdit = Boolean(entry.id);
+  const url = isEdit
+    ? `http://localhost:8080/api/entries/${entry.id}`
+    : "http://localhost:8080/api/entries";
+
+  fetch(url, {
+    method: isEdit ? "PUT" : "POST",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify(entry),
+  })
+    .then((res) => {
+      if (!res.ok) throw new Error("Failed to save entry");
+      return res.json();
+    })
+    .then((savedEntry) => {
+      setEntries((prev) =>
+        isEdit
+          ? prev.map((e) => (e.id === savedEntry.id ? savedEntry : e))
+          : [...prev, savedEntry]
+      );
+      setEditingEntry(null);
+    })
+    .catch((error) => {
+      console.error("Save error:", error);
+    });
+};
+
 
   const deleteEntry = (id) => {
-    setEntries(entries.filter(entry => entry.id !== id));
+    fetch(`http://localhost:8080/api/entries/${id}`, {
+      method: "DELETE",
+    })
+      .then((res) => {
+        if (!res.ok) {
+          throw new Error("Failed to delete entry");
+        }
+        setEntries((prevEntries) => prevEntries.filter((entry) => entry.id !== id));
+      })
+      .catch((error) => {
+        console.error("Delete error:", error);
+        // Optionally show a user-friendly error message
+      });
   };
 
   const editEntry = (entry) => {
