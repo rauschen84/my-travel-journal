@@ -51,3 +51,41 @@ h1 {
   word-wrap: break-word;
   overflow-wrap: break-word;
 }
+
+.map-link {
+  font-size: 0.9rem;
+  margin-left: 0.5rem;
+  color: #1a73e8;
+  text-decoration: none;
+}
+
+.map-link:hover {
+  text-decoration: underline;
+}
+
+/* --- Mobile styles --- */
+@media (max-width: 600px) {
+  .entry-card {
+    flex-direction: column;
+    gap: 1rem;
+  }
+
+  .images {
+    max-width: 100%;
+    flex: none;
+  }
+
+  .description {
+    flex: none;
+  }
+
+  .entry-form input,
+  .entry-form textarea,
+  .entry-form button {
+    font-size: 0.95rem;
+  }
+
+  h1 {
+    font-size: 1.5rem;
+  }
+}
